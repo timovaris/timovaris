@@ -1,5 +1,11 @@
 # Varisparvi.net
 
+Product manager, programmer, console & retro gamer and sci-fi enthusiast. Father and a [geek](https://gist.github.com/itimo/0968b51f41d5aa27864945ce036c3bc2).
+
+This is my personal homesite, which may or may not be up to date with current events of my life.
+
+## You can find me all around interwebs
+
 I am [@itimo](https://twitter.com/iTimo) on twitter
 
 Here is my [cv](https://gist.github.com/itimo/02a8e0ec322bccc53e45e8beacbe443d) and a [LinkedIn](https://www.linkedin.com/in/timov/)-profile
