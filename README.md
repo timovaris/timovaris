@@ -1,4 +1,4 @@
-# Varisparvi.net
+# Timo S. Varis aka Timov
 
 Product manager, programmer, console & retro gamer and sci-fi enthusiast. Father and a [geek](https://varisparvi.net/geek).
 
@@ -10,6 +10,6 @@ I am [@varis_timo](https://twitter.com/varis_timo) on twitter
 
 Here is my [cv](https://varisparvi.net/cv) and a [LinkedIn](https://www.linkedin.com/in/timov/)-profile
 
-This is [my lending page](http://www.kiva.org/lender/timov) in [Kiva](http://www.kiva.org), which is a microcredit service mainly for helping people in third wordld countries.
+This is [my lending page](http://www.kiva.org/lender/timov) in [Kiva](http://www.kiva.org), which is a microcredit service mainly for helping people in third wordld countries
 
 You can contact me with this [form](https://goo.gl/forms/ETH1lU7XF2EqZHog1)
