@@ -1,6 +1,6 @@
 # Varisparvi.net
 
-Product manager, programmer, console & retro gamer and sci-fi enthusiast. Father and a [geek](https:/verisparvi.net/geek).
+Product manager, programmer, console & retro gamer and sci-fi enthusiast. Father and a [geek](https:/varisparvi.net/geek).
 
 This is my personal homesite, which may or may not be up to date with current events of my life.
 
