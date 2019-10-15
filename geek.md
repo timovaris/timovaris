@@ -4,6 +4,9 @@ title: "My geek history"
 permalink: /geek/
 -->
 
+
+[<back](https://varisparvi.net)
+
 # My geek history
 
 ## History with computers
