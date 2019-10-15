@@ -1,7 +1,8 @@
+<!--
 layout: page
 title: "CV"
 permalink: /cv/
-
+-->
 ## Personal details
 
 Name: Timo Varis
