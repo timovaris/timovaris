@@ -16,7 +16,7 @@ Contact: Preferably via [LinkedIn](https://www.linkedin.com/in/timov/)
 
 ## Summary
 
-Experienced itc-professional and supervisor with 19 years of experience in various positions. Currently working as a product manager at Visma. 
+Experienced itc-professional and supervisor with 20+ years of experience in various positions. Currently working as a product manager at Visma. 
 
 During my career in software development, I have used various different technologies and design patterns, mostly in OO paradigm. In project management and product owner roles I have used both waterfall and agile methodologies. 
 
