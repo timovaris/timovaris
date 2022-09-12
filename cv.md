@@ -16,7 +16,7 @@ Contact: Preferably via [LinkedIn](https://www.linkedin.com/in/timov/)
 
 ## Summary
 
-Experienced itc-professional and supervisor with 20+ years of experience in various positions. Currently working as a product manager at Visma. 
+Experienced itc-professional and supervisor with 20+ years of experience in various positions. Currently working as a advisory consultant in Knowit Solutions. 
 
 During my career in software development, I have used various different technologies and design patterns, mostly in OO paradigm. In project management and product owner roles I have used both waterfall and agile methodologies. 
 
@@ -27,8 +27,6 @@ My skill set includes, but is not limited to:
 - Consultancy (e.g. document management process, platform economy, integrations etc.)
 - Leading multicultural development teams
 - Product portfolio and roadmap management
-
-I have been involved with product management more or less since 2011, and currently I am responsible for our e-services and api. Our microservices based e-services are market leader of their field in Finland.
 
 My experience in software development industry is mostly based in following "business domains":
 - records- and documents management
@@ -69,10 +67,15 @@ Technical project manager
 Product manager (API, e-services)   
 *Product management, roadmap management, service design, large scale integration projects*
 
-**Visma Tampuuri Oy, 6/2018 - present day**
+**Visma Tampuuri Oy, 6/2018 - 8/2022**
 
 Product manager (API, e-services)   
 *Product management, roadmap management, service design, large scale integration projects*
+
+**Knowit Solutions Oy, 8/2022 - present day**
+
+Advisory Consultant     
+*Leading and managing projects and software lifecycle, providing advisory expertise in software development*
 
 ## Education
 
