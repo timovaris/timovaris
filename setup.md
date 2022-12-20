@@ -13,7 +13,7 @@ permalink: /setup/
 * Intel 8600K + Prime Z370-P
 * GeForce GTX 1080ti
 * 2x500 GB SSD
-* 16 GB ram 
+* 16 GB ram
 
 * Steel Series Apex Pro TKL keyboard
 * Corsair Virtuoso RGB Wireles SE headset
