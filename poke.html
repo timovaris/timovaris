@@ -157,7 +157,7 @@ th, td {
         </thead>
         <tbody id="resultList"></tbody>
     </table>
-    <p>Correct answers: <span id="correctCount">0</span>/10</p>
+    <p>Correct answers: <span id="correctCount">0</span></p>
     <button id="replayButton">Replay</button>
 </div>
 
@@ -229,7 +229,13 @@ function displayPokemon() {
 
 function displayResults() {
     results.style.display = "block";
-    correctCount.textContent = correctAnswers;
+
+    // Update correct answers text based on the mode
+    if (suddenDeathMode) {
+        correctCount.textContent = correctAnswers;
+    } else {
+        correctCount.textContent = correctAnswers + "/10";
+    }
 
     pokemons.forEach((pokemon, index) => {
         // Only display pokemons up to the current index for sudden death mode
@@ -255,6 +261,7 @@ function displayResults() {
 }
 
 
+
 let suddenDeathMode = false;
 
 function resetGame() {
@@ -273,7 +280,7 @@ function nextPokemon() {
     if (currentPokemonIndex < pokemons.length) {
         displayPokemon();
     } else if (suddenDeathMode) {
-        fetchPokemons(suddenDeathMode ? 1 : 10, suddenDeathMode).then(() => {
+        fetchPokemons(898, suddenDeathMode).then(() => { // Change the maxId to 898
             displayPokemon();
         });
     } else {
@@ -281,6 +288,7 @@ function nextPokemon() {
         displayResults();
     }
 }
+
 
 optionButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
