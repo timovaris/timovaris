@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        img {
+            max-width: 200px;
+        }
+
+        #options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #f8d348;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #f0c008;
+        }
+
+        #results {
+            display: none;
+        }
+
+        #loading {
+            display: none;
+            font-size: 24px;
+        }
+
+        #pokemonImageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 250px;
+    margin-bottom: 20px;
+}
+
+.correct {
+    color: green;
+    font-weight: bold;
+}
+
+.incorrect {
+    color: red;
+}
+#results h2 {
+    margin-bottom: 10px;
+}
+
+#resultList {
+    margin-bottom: 20px;
+}
+
+#replayButton {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #3a9ed6;
+}
+
+#replayButton:hover {
+    background-color: #1e87c0;
+}
+
+#chooseMode {
+    display: none;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+#chooseMode {
+    display: flex;
+    justify-content: center;
+}
+
+#chooseMode button {
+    margin: 0 10px;
+}
+
+@keyframes loadingDots {
+    0%,
+    20% {
+        content: "";
+    }
+    40% {
+        content: ".";
+    }
+    60% {
+        content: "..";
+    }
+    80%,
+    100% {
+        content: "...";
+    }
+}
+
+#loading::after {
+    content: "";
+    animation: loadingDots 2s infinite;
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>Pokemon Guessing Game</h1>
+    <div id="loading">Loading</div>
+    <div id="pokemonImageContainer">
+    <img id="pokemonImage" src=".\koffing.gif" alt="Pokemon">
+
+</div>
+
+    <div id="options">
+        <button id="option1">Option 1</button>
+        <button id="option2">Option 2</button>
+        <button id="option3">Option 3</button>
+        <button id="option4">Option 4</button>
+    </div>
+    <div id="chooseMode">
+    <button id="allPokemons">All Pokemons</button>
+    <button id="originalPokemons">Original 150</button>
+</div>
+<div id="results">
+    <h2>Results</h2>
+    <table id="resultTable">
+        <thead>
+            <tr>
+                <th>Pokemon</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody id="resultList"></tbody>
+    </table>
+    <p>Correct answers: <span id="correctCount">0</span>/10</p>
+    <button id="replayButton">Replay</button>
+</div>
+
+    <script>
+        const pokeAPI = "https://pokeapi.co/api/v2/pokemon/";
+const imageBaseUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
+const pokemonImage = document.getElementById("pokemonImage");
+const options = document.getElementById("options");
+const optionButtons = [
+    document.getElementById("option1"),
+    document.getElementById("option2"),
+    document.getElementById("option3"),
+    document.getElementById("option4"),
+];
+const results = document.getElementById("results");
+const resultList = document.getElementById("resultList");
+const correctCount = document.getElementById("correctCount");
+const loading = document.getElementById("loading");
+const chooseMode = document.getElementById("chooseMode");
+const allPokemonsButton = document.getElementById("allPokemons");
+const originalPokemonsButton = document.getElementById("originalPokemons");
+const replayButton = document.getElementById("replayButton");
+
+let pokemons = [];
+let currentPokemonIndex = 0;
+let correctAnswers = 0;
+
+async function fetchRandomPokemon(maxId) {
+    const randomId = Math.floor(Math.random() * maxId) + 1;
+    const response = await fetch(pokeAPI + randomId);
+    const data = await response.json();
+    return data;
+}
+
+async function fetchPokemons(maxId) {
+    for (let i = 0; i < 10; i++) {
+        const pokemon = await fetchRandomPokemon(maxId);
+        const otherOptions = await Promise.all([
+            fetchRandomPokemon(maxId),
+            fetchRandomPokemon(maxId),
+            fetchRandomPokemon(maxId),
+        ]);
+        pokemons.push({
+            name: pokemon.name,
+            imageUrl: imageBaseUrl + pokemon.id + ".png",
+            options: shuffle([pokemon.name, ...otherOptions.map((p) => p.name)]),
+            guessed: false,
+        });
+    }
+}
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function displayPokemon() {
+    pokemonImage.src = pokemons[currentPokemonIndex].imageUrl;
+    pokemons[currentPokemonIndex].options.forEach((option, index) => {
+        optionButtons[index].textContent = option;
+    });
+    loading.style.display = "none";
+    pokemonImage.style.display = "block";
+    options.style.display = "flex";
+}
+
+function displayResults() {
+    results.style.display = "block";
+    correctCount.textContent = correctAnswers;
+
+    pokemons.forEach((pokemon) => {
+        const listItem = document.createElement("tr");
+        const pokemonNameCell = document.createElement("td");
+        const resultCell = document.createElement("td");
+        
+        pokemonNameCell.textContent = pokemon.name;
+        resultCell.textContent = pokemon.guessed ? "Correct" : "Incorrect";
+        resultCell.classList.add(pokemon.guessed ? "correct" : "incorrect");
+        
+        listItem.appendChild(pokemonNameCell);
+        listItem.appendChild(resultCell);
+        resultList.appendChild(listItem);
+    });
+}
+
+function resetGame() {
+    pokemons = [];
+    currentPokemonIndex = 0;
+    correctAnswers = 0;
+    resultList.innerHTML = "";
+    results.style.display = "none";
+    chooseMode.style.display = "flex";
+    pokemonImage.src = "./koffing.gif";
+    pokemonImage.style.display = "block";
+}
+
+optionButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+        const guess = e.target.textContent;
+
+        if (guess === pokemons[currentPokemonIndex].name) {
+            pokemons[currentPokemonIndex].guessed = true;
+            correctAnswers++;
+        }
+
+        currentPokemonIndex++;
+
+                if (currentPokemonIndex < pokemons.length) {
+            displayPokemon();
+        } else {
+            options.style.display = "none";
+            displayResults();
+        }
+    });
+});
+
+allPokemonsButton.addEventListener("click", () => {
+    chooseMode.style.display = "none";
+    loading.style.display = "block";
+    fetchPokemons(898).then(() => {
+        displayPokemon();
+    });
+});
+
+originalPokemonsButton.addEventListener("click", () => {
+    chooseMode.style.display = "none";
+    loading.style.display = "block";
+    fetchPokemons(150).then(() => {
+        displayPokemon();
+    });
+});
+
+replayButton.addEventListener("click", resetGame);
+
+loading.style.display = "none";
+options.style.display = "none";
+chooseMode.style.display = "flex";
+
+</script>
+</body>
+</html>
