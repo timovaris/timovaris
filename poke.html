@@ -144,6 +144,7 @@ th, td {
     <div id="chooseMode">
     <button id="allPokemons">All Pokemons</button>
     <button id="originalPokemons">Original 150</button>
+    <button id="suddenDeath">Sudden Death</button>
 </div>
 <div id="results">
     <h2>Results</h2>
@@ -191,7 +192,7 @@ async function fetchRandomPokemon(maxId) {
     return data;
 }
 
-async function fetchPokemons(maxId) {
+async function fetchPokemons(maxId, suddenDeathMode = false) {
     for (let i = 0; i < 10; i++) {
         const pokemon = await fetchRandomPokemon(maxId);
         const otherOptions = await Promise.all([
@@ -230,20 +231,31 @@ function displayResults() {
     results.style.display = "block";
     correctCount.textContent = correctAnswers;
 
-    pokemons.forEach((pokemon) => {
-        const listItem = document.createElement("tr");
-        const pokemonNameCell = document.createElement("td");
-        const resultCell = document.createElement("td");
-        
-        pokemonNameCell.textContent = pokemon.name;
-        resultCell.textContent = pokemon.guessed ? "Correct" : "Incorrect";
-        resultCell.classList.add(pokemon.guessed ? "correct" : "incorrect");
-        
-        listItem.appendChild(pokemonNameCell);
-        listItem.appendChild(resultCell);
-        resultList.appendChild(listItem);
+    pokemons.forEach((pokemon, index) => {
+        // Only display pokemons up to the current index for sudden death mode
+        if (!suddenDeathMode || index < currentPokemonIndex) {
+            const listItem = document.createElement("tr");
+            const pokemonNameCell = document.createElement("td");
+            const resultCell = document.createElement("td");
+
+            pokemonNameCell.textContent = pokemon.name;
+            resultCell.textContent = pokemon.guessed ? "Correct" : "Incorrect";
+            resultCell.classList.add(pokemon.guessed ? "correct" : "incorrect");
+
+            // Highlight the unknown pokemon in sudden death mode
+            if (suddenDeathMode && !pokemon.guessed) {
+                listItem.style.backgroundColor = "#ffd6d6";
+            }
+
+            listItem.appendChild(pokemonNameCell);
+            listItem.appendChild(resultCell);
+            resultList.appendChild(listItem);
+        }
     });
 }
+
+
+let suddenDeathMode = false;
 
 function resetGame() {
     pokemons = [];
@@ -254,6 +266,20 @@ function resetGame() {
     chooseMode.style.display = "flex";
     pokemonImage.src = "./koffing.gif";
     pokemonImage.style.display = "block";
+    suddenDeathMode = false;
+}
+
+function nextPokemon() {
+    if (currentPokemonIndex < pokemons.length) {
+        displayPokemon();
+    } else if (suddenDeathMode) {
+        fetchPokemons(suddenDeathMode ? 1 : 10, suddenDeathMode).then(() => {
+            displayPokemon();
+        });
+    } else {
+        options.style.display = "none";
+        displayResults();
+    }
 }
 
 optionButtons.forEach((button) => {
@@ -267,14 +293,15 @@ optionButtons.forEach((button) => {
 
         currentPokemonIndex++;
 
-                if (currentPokemonIndex < pokemons.length) {
-            displayPokemon();
-        } else {
+        if (suddenDeathMode && !pokemons[currentPokemonIndex - 1].guessed) {
             options.style.display = "none";
             displayResults();
+        } else {
+            nextPokemon();
         }
     });
 });
+
 
 allPokemonsButton.addEventListener("click", () => {
     chooseMode.style.display = "none";
@@ -288,6 +315,17 @@ originalPokemonsButton.addEventListener("click", () => {
     chooseMode.style.display = "none";
     loading.style.display = "block";
     fetchPokemons(150).then(() => {
+        displayPokemon();
+    });
+});
+
+const suddenDeathButton = document.getElementById("suddenDeath");
+
+suddenDeathButton.addEventListener("click", () => {
+    chooseMode.style.display = "none";
+    loading.style.display = "block";
+    suddenDeathMode = true;
+    fetchPokemons(898, suddenDeathMode).then(() => { // Change the maxId to 898
         displayPokemon();
     });
 });
