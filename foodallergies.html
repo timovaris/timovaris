@@ -75,6 +75,14 @@
     let isScanning = false;
     let lastScannedBarcode = "";
 
+    let streamWidth = 640;
+    let streamHeight = 480;
+
+    if (window.innerWidth < 640) {
+        streamWidth = 320;
+        streamHeight = 240;
+    }
+
     document.addEventListener('DOMContentLoaded', (event) => {
         const savedAllergens = localStorage.getItem('allergens');
         if (savedAllergens) {
@@ -88,8 +96,8 @@
             inputStream: {
                 type: "LiveStream",
                 constraints: {
-                    width: 640,
-                    height: 480,
+                    width: streamWidth,
+                    height: streamHeight,
                     facingMode: "environment"
                 },
                 target: document.querySelector('#interactive')
