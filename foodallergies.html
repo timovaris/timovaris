@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allergen Checker</title>
+    <style>
+        #result {
+            padding: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+        .warning {
+            background-color: red;
+            color: white;
+        }
+        .clearance {
+            background-color: green;
+            color: white;
+        }
+        .notfound {
+            background-color: orange;
+            color: white;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        th, td {
+            text-align: left;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+</head>
+<body>
+
+<label for="allergens">Enter Allergens (separated by commas):</label>
+<input type="text" id="allergens" name="allergens"><br><br>
+
+<label for="barcode">Enter Barcode:</label>
+<input type="text" id="barcode" name="barcode"><br><br>
+
+<button onclick="startScanner()">Start Scanner</button><br><br>
+<button onclick="stopScanner()">Stop Scanner</button><br><br>
+<button onclick="checkAllergens()">Check Allergens</button>
+
+<div id="result"></div>
+<br>
+<table id="infoTable" style="display:none;">
+    <tr>
+        <th>Product Name</th>
+        <td id="productName"></td>
+    </tr>
+    <tr>
+        <th>Ingredients</th>
+        <td id="ingredients"></td>
+    </tr>
+    <tr>
+        <th>Allergens</th>
+        <td id="allergens"></td>
+    </tr>
+    <tr>
+        <th>Traces</th>
+        <td id="traces"></td>
+    </tr>
+    <tr>
+        <th>Found Allergens</th>
+        <td id="foundAllergens"></td>
+    </tr>
+</table><br>
+<div id="interactive" class="viewport"></div>
+
+<script>
+    let isScanning = false;
+    let lastScannedBarcode = "";
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const savedAllergens = localStorage.getItem('allergens');
+        if (savedAllergens) {
+            document.getElementById('allergens').value = savedAllergens;
+        }
+    });
+
+    function startScanner() {
+        isScanning = true; 
+        Quagga.init({
+            inputStream: {
+                type: "LiveStream",
+                constraints: {
+                    width: 640,
+                    height: 480,
+                    facingMode: "environment"
+                },
+                target: document.querySelector('#interactive')
+            },
+            decoder: {
+                readers: ["ean_reader"]
+            },
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            Quagga.start();
+        });
+
+        Quagga.onDetected(function (data) {
+            if (!isScanning) return;  // Ensure it does not process when scanning is paused
+
+            const barcode = data.codeResult.code;
+
+            // Check if the new barcode is different from the last scanned barcode
+            if (barcode !== lastScannedBarcode) {
+                lastScannedBarcode = barcode;  // Update the last scanned barcode
+                document.getElementById('barcode').value = barcode;
+
+                checkAllergens();    // Automatically trigger the search
+
+                isScanning = false;  // Pause scanning
+
+                // Add a timeout to resume scanning after 5 seconds
+                setTimeout(() => {
+                    isScanning = true;
+                }, 5000);
+            }
+        });
+    }
+
+    function stopScanner() {
+        isScanning = false;  
+        Quagga.stop();
+        document.getElementById('interactive').innerHTML = '';
+    }
+
+    document.getElementById('barcode').addEventListener('input', function() {
+        if (isScanning) {
+            checkAllergens();
+        }
+    });
+
+    async function checkAllergens() {
+        const allergensInput = document.getElementById('allergens').value;
+        localStorage.setItem('allergens', allergensInput);  // save allergens to localStorage
+
+        const barcode = document.getElementById('barcode').value;
+        const allergensArray = allergensInput.split(',');
+
+        const url = `https://world.openfoodfacts.org/api/v2/product/${barcode}?fields=product_name,ingredients_text,allergens,traces`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // Check if response is not okay
+        if (!response.ok) {
+            // Check if status code is 404
+            if(response.status === 404) {
+                displayNotFound();
+                return;
+            }
+            throw new Error('Network response was not ok: ' + response.statusText);
+        }
+
+        const productInfo = data.product;
+        console.log(productInfo);
+        const resultDiv = document.getElementById('result');
+        const resultTable = document.getElementById('infoTable');
+        document.getElementById('productName').innerText = productInfo.product_name;
+        document.getElementById('ingredients').innerText = productInfo.ingredients_text;
+        document.getElementById('allergens').innerText = productInfo.allergens;
+        document.getElementById('traces').innerText = productInfo.traces;
+
+        let allergensFound = [];
+        allergensArray.forEach(allergen => {
+            if (productInfo.ingredients_text && productInfo.ingredients_text.toLowerCase().includes(allergen.trim().toLowerCase())) {
+                allergensFound.push(allergen.trim());
+            }
+            if (productInfo.allergens && productInfo.allergens.toLowerCase().includes(allergen.trim().toLowerCase())) {
+                allergensFound.push(allergen.trim());
+            }
+            if (productInfo.traces && productInfo.traces.toLowerCase().includes(allergen.trim().toLowerCase())) {
+                allergensFound.push(allergen.trim());
+            }
+        });
+
+        if (allergensFound.length > 0) {
+            resultDiv.className = 'warning';
+            resultDiv.innerHTML = `Warning! Allergens found: ${allergensFound.join(', ')}`;
+        } else {
+            resultDiv.className = 'clearance';
+            resultDiv.innerHTML = 'Clearance! No allergens found.';
+        }
+        resultDiv.style.display = 'block';
+        
+        document.getElementById('foundAllergens').innerText = allergensFound.join(', ') || 'None';
+        resultTable.style.display = 'table';
+    }
+
+    function displayNotFound() {
+        document.getElementById("result").style.display = "block";
+        document.getElementById("result").className = "notfound";
+        document.getElementById("result").innerHTML = "Product not found!";
+        document.getElementById("infoTable").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
