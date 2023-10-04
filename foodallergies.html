@@ -30,6 +30,12 @@
         th, td {
             text-align: left;
         }
+        #interactive {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+            margin: auto;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 </head>
@@ -77,11 +83,6 @@
 
     let streamWidth = 640;
     let streamHeight = 480;
-
-    if (window.innerWidth < 640) {
-        streamWidth = 320;
-        streamHeight = 240;
-    }
 
     document.addEventListener('DOMContentLoaded', (event) => {
         const savedAllergens = localStorage.getItem('allergens');
@@ -192,10 +193,10 @@
 
         if (allergensFound.length > 0) {
             resultDiv.className = 'warning';
-            resultDiv.innerHTML = `Warning! Allergens found: ${allergensFound.join(', ')}`;
+            resultDiv.innerHTML = `Barcode ${barcode} Warning! Allergens found: ${allergensFound.join(', ')}`;
         } else {
             resultDiv.className = 'clearance';
-            resultDiv.innerHTML = 'Clearance! No allergens found.';
+            resultDiv.innerHTML = 'Barcode ${barcode} Clearance! No allergens found.';
         }
         resultDiv.style.display = 'block';
         
