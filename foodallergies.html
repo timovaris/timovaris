@@ -180,7 +180,7 @@
         document.getElementById('traces').innerText = productInfo.traces;
 
         let allergensFound = [];
-        if (allergensInput.trim() !== '') {
+        if (allergensInput.trim().length() > 2) {
             allergensArray.forEach(allergen => {
                 if (productInfo.ingredients_text && productInfo.ingredients_text.toLowerCase().includes(allergen.trim().toLowerCase())) {
                     allergensFound.push(allergen.trim());
