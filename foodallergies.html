@@ -193,7 +193,7 @@
 
         if (allergensFound.length > 0) {
             resultDiv.className = 'warning';
-            resultDiv.innerHTML = `Barcode ${barcode} Warning! Allergens found: ${allergensFound.join(', ')}`;
+            resultDiv.innerHTML = 'Barcode ${barcode} Warning! Allergens found: ${allergensFound.join(', ')}';
         } else {
             resultDiv.className = 'clearance';
             resultDiv.innerHTML = 'Barcode ${barcode} Clearance! No allergens found.';
