@@ -165,7 +165,7 @@
         if (!response.ok) {
             // Check if status code is 404
             if(response.status === 404) {
-                displayNotFound();
+                displayNotFound(barcode);
                 return;
             }
             throw new Error('Network response was not ok: ' + response.statusText);
@@ -208,7 +208,7 @@
         resultTable.style.display = 'table';
     }
 
-    function displayNotFound() {
+    function displayNotFound(barcode) {
         document.getElementById("result").style.display = "block";
         document.getElementById("result").className = "notfound";
         document.getElementById("result").innerHTML = `Barcode: ${barcode} - Product not found!`;
