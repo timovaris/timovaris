@@ -75,7 +75,8 @@
         <td id="foundAllergens"></td>
     </tr>
 </table><br>
-<div id="interactive" class="viewport"></div>
+
+<div id="interactive" class="viewport" style="width: 100%; height: 50vh; overflow: auto;"></div>
 
 <script>
     let isScanning = false;
@@ -179,17 +180,19 @@
         document.getElementById('traces').innerText = productInfo.traces;
 
         let allergensFound = [];
-        allergensArray.forEach(allergen => {
-            if (productInfo.ingredients_text && productInfo.ingredients_text.toLowerCase().includes(allergen.trim().toLowerCase())) {
-                allergensFound.push(allergen.trim());
-            }
-            if (productInfo.allergens && productInfo.allergens.toLowerCase().includes(allergen.trim().toLowerCase())) {
-                allergensFound.push(allergen.trim());
-            }
-            if (productInfo.traces && productInfo.traces.toLowerCase().includes(allergen.trim().toLowerCase())) {
-                allergensFound.push(allergen.trim());
-            }
-        });
+        if (allergensInput.trim() !== '') {
+            allergensArray.forEach(allergen => {
+                if (productInfo.ingredients_text && productInfo.ingredients_text.toLowerCase().includes(allergen.trim().toLowerCase())) {
+                    allergensFound.push(allergen.trim());
+                }
+                if (productInfo.allergens && productInfo.allergens.toLowerCase().includes(allergen.trim().toLowerCase())) {
+                    allergensFound.push(allergen.trim());
+                }
+                if (productInfo.traces && productInfo.traces.toLowerCase().includes(allergen.trim().toLowerCase())) {
+                    allergensFound.push(allergen.trim());
+                }
+            });
+        }
 
         if (allergensFound.length > 0) {
             resultDiv.className = 'warning';
@@ -207,7 +210,7 @@
     function displayNotFound() {
         document.getElementById("result").style.display = "block";
         document.getElementById("result").className = "notfound";
-        document.getElementById("result").innerHTML = "Product not found!";
+        document.getElementById("result").innerHTML = `Barcode: ${barcode} - Product not found!`;
         document.getElementById("infoTable").style.display = "none";
     }
 </script>
