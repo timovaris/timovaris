@@ -41,6 +41,10 @@
 </head>
 <body>
 
+<div id="result"></div>
+<br>
+<div id="interactive" class="viewport" style="width: 100%; height: 50vh; overflow: auto;"></div>
+
 <label for="allergens">Enter Allergens (separated by commas):</label>
 <input type="text" id="allergens" name="allergens"><br><br>
 
@@ -51,8 +55,7 @@
 <button onclick="stopScanner()">Stop Scanner</button><br><br>
 <button onclick="checkAllergens()">Check Allergens</button>
 
-<div id="result"></div>
-<br>
+
 <table id="infoTable" style="display:none;">
     <tr>
         <th>Product Name</th>
@@ -75,8 +78,6 @@
         <td id="foundAllergens"></td>
     </tr>
 </table><br>
-
-<div id="interactive" class="viewport" style="width: 100%; height: 50vh; overflow: auto;"></div>
 
 <script>
     let isScanning = false;
