@@ -21,7 +21,7 @@
 
         @media only screen and (max-width: 600px) {
             #timeInWords {
-                font-size: 10em;
+                font-size: 3em;
             }
         }
 
@@ -29,11 +29,9 @@
         position: relative;
         margin: auto;
         margin-top: 20px; 
-        height: 40vw;
-        /*to make the height and width responsive*/
-        width: 40vw;
+        height: 90vw;
+        width: 90vw;
         background: url(kello.png) no-repeat;
-        /*setting our background image*/
         background-size: 100%;
         }
         
@@ -92,7 +90,8 @@
         const hours = date.getHours();
         const minutes = date.getMinutes();
 
-        const hourNames = ["kaksitoista", "yksi", "kaksi", "kolme", "neljä", "viisi", "kuusi", "seitsemän", "kahdeksan", "yhdeksän", "kymmenen", "yksitoista", "kaksitoista", "yksi", "kaksi", "kolme", "neljä", "viisi", "kuusi", "seitsemän", "kahdeksan", "yhdeksän", "kymmenen", "yksitoista"];
+        // hour names in Finnish
+        const hourNames = ["kaksitoista", "yksi", "kaksi", "kolme", "neljä", "viisi", "kuusi", "seitsemän", "kahdeksan", "yhdeksän", "kymmenen", "yksitoista", "kaksitoista", "yksi", "kaksi", "kolme", "neljä", "viisi", "kuusi", "seitsemän", "kahdeksan", "yhdeksän", "kymmenen", "yksitoista", "kaksitoista"];
         let timeInWords = "";
 
         if (minutes === 0) {
