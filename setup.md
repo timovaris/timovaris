@@ -19,18 +19,18 @@ Gaming peripherals:
 * Corsair Virtuoso RGB Wireles SE headset
 * Philips 65" TV as a screen
 * Thrustmaster T Flight Hotas X (for Elite Dangerous)
-* Logitech G Pro Hero mouse
+* Logitech G303 Shroud mouse
 * Oculus Rift (1st generation)
 
 Working computer:
-* HP Elitebook running Windows 11
+* Asus ProArt PX13
 * 34" Dell Ultrawide
 * Unicomp Ultra Classic keyboard
 * Rollermouse Red mouse
-* Shokz Opencom headset
+* Shokz Opencom headset / Audiotechnica ATH-M50x + Blue Yeti Pro microphone
 * Sony Alpha A5100 as webcam
 
 Laptop & cellphone & other mobile stuff:
-* Lenovo P50 running Ubuntu & Windows 10
+* Lenovo P50 running Ubuntu
 * Usually some new Samsung Galaxy model
 * Remarkable note taking tablet

@@ -16,7 +16,7 @@ Contact: Preferably via [LinkedIn](https://www.linkedin.com/in/timov/)
 
 ## Summary
 
-Experienced itc-professional and supervisor with 20+ years of experience in various positions. Currently working as a advisory consultant in Knowit Solutions. 
+Experienced itc-professional and supervisor with 25 years of experience in various positions. Currently working as a senior consultant in Arado. 
 
 During my career in software development, I have used various different technologies and design patterns, mostly in OO paradigm. In project management and product owner roles I have used both waterfall and agile methodologies. 
 
@@ -44,8 +44,7 @@ Financial Solutions Systems Analyst
 **Festum Software Oy, 08/2003 – 12/2011**
 
 Consultant and partner   
-*Quality management systems, records management systems, programming, project
-management.*
+*Quality management systems, records management systems, programming, project management*
 
 **Aune Consulting 11/2008 – 06/2011**
 
@@ -72,10 +71,15 @@ Product manager (API, e-services)
 Product manager (API, e-services)   
 *Product management, roadmap management, service design, large scale integration projects*
 
-**Knowit Solutions Oy, 8/2022 - present day**
+**Knowit Solutions Oy, 8/2022 - 11/2024**
 
 Advisory Consultant     
 *Leading and managing projects and software lifecycle, providing advisory expertise in software development*
+
+**Arado Oy, 11/2024 - present day**
+
+Senior Consultant     
+*Product and project management, team leading, service design, lifecycle management*
 
 ## Education
 
