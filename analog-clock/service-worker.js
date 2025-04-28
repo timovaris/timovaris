@@ -1,9 +1,10 @@
 // Tämä on esimerkki palvelutyöntekijästä
 const CACHE_NAME = 'v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/kello.png',
+  './',
+  './index.html',
+  './kello.png',
+  './pikachu.gif'
 ];
 
 self.addEventListener('install', event => {

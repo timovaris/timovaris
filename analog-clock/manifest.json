@@ -1,0 +1,16 @@
+{
+  "name": "Analog Clock",
+  "short_name": "Clock",
+  "description": "An offline-capable analog clock",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "./kello.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
