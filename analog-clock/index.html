@@ -96,17 +96,17 @@ async function getCelebrationDay() {
         const celebrationElement = document.getElementById("celebrationDay");
 
         if (result.data && result.data.length > 0) {
-            const day = result.data[0]; // take the first item in the 'data' array
-            const date = result.date || day.date?.substring(0, 10); // fallback to ISO date if needed
-            celebrationElement.innerText = `${day.name} (${date}) - Liputuspäivä`;
+            const day = result.data[0];
+            celebrationElement.innerText = `${day.name} – ${result.date}`;
         } else {
-            celebrationElement.innerText = "Tavallinen päivä - Ei liputusta";
+            celebrationElement.innerText = "Tavallinen päivä – Ei liputusta";
         }
     } catch (error) {
         console.error('Error fetching celebration day:', error);
-        document.getElementById("celebrationDay").innerText = "Tavallinen päivä - Ei liputusta";
+        document.getElementById("celebrationDay").innerText = "Tavallinen päivä – Ei liputusta";
     }
 }
+
 
         // Initialize clock and celebration day info
         window.onload = function() {
