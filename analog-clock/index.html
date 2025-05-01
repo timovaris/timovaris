@@ -88,24 +88,25 @@
 
     <script>
         // Fetch celebration day information
-        async function getCelebrationDay() {
-            try {
-                const response = await fetch('https://mitatanaanliputetaan.vercel.app/api/liputuspaivat/today');
-                const data = await response.json();
-                
-                const celebrationElement = document.getElementById("celebrationDay");
-                
-                if (data && data.name) {
-                    const flagStatus = data.shouldRaiseFlag ? "Liputuspäivä" : "Ei liputusta";
-                    celebrationElement.innerText = `${data.name} - ${flagStatus}`;
-                } else {
-                    celebrationElement.innerText = "Tavallinen päivä - Ei liputusta";
-                }
-            } catch (error) {
-                console.error('Error fetching celebration day:', error);
-                document.getElementById("celebrationDay").innerText = "Tavallinen päivä - Ei liputusta";
-            }
+async function getCelebrationDay() {
+    try {
+        const response = await fetch('https://mitatanaanliputetaan.vercel.app/api/liputuspaivat/today');
+        const result = await response.json();
+
+        const celebrationElement = document.getElementById("celebrationDay");
+
+        if (result.data && result.data.length > 0) {
+            const day = result.data[0]; // take the first item in the 'data' array
+            const date = result.date || day.date?.substring(0, 10); // fallback to ISO date if needed
+            celebrationElement.innerText = `${day.name} (${date}) - Liputuspäivä`;
+        } else {
+            celebrationElement.innerText = "Tavallinen päivä - Ei liputusta";
         }
+    } catch (error) {
+        console.error('Error fetching celebration day:', error);
+        document.getElementById("celebrationDay").innerText = "Tavallinen päivä - Ei liputusta";
+    }
+}
 
         // Initialize clock and celebration day info
         window.onload = function() {
